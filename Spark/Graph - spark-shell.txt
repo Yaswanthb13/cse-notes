@@ -1,0 +1,50 @@
+Graph - spark-shell
+
+$ import org.apache.spark._
+$ import org.apache.spark.rdd.RDD
+$ import org.apache.spark.graphx._
+
+$ val vertices=Array((1L,("A")),(2L,("B")),(3L,("C")))
+$ val vrdd=sc.parallelize(vertices)
+$ vrdd.take(1)
+vrdd.collect()
+
+$ val edges=Array(Edge(1L,2L,1800),Edge(2L,3L,800),Edge(3L,1L,1400))
+$ val erdd=sc.parallelize(edges)
+$ erdd.take(3)
+erdd.collect()
+
+$ val nowhere="nowhere"
+$ val graph=Graph(vrdd,erdd,nowhere)
+$ graph.vertices.collect.foreach(println)
+
+
+//no of vertices
+$ val v=graph.numVertices
+//no of edges
+$ val e=graph.numEdges
+
+$ graph.edges.filter{case Edge(src,dst,dist)=>dist>1000}.collect.foreach(println)
+
+//triplets
+$ graph.triplets.take(3).foreach(println)
+
+//
+$ graph.triplets.sortBy(_.attr,ascending=false).map(triplet=> "Distance "+ triplet.attr.toString+" from " + triplet.srcAttr + " to "+ triplet.dstAttr+ ".").foreach(println)
+
+//Indegree
+$ val i = graph.inDegrees
+$ i.collect()
+
+//Outdegree
+$ val o=graph.outDegrees
+$ o.collect()
+
+//total number of degrees
+$ val td=graph.degrees
+$ td.collect()
+
+
+
+graph.vertices.filter {case (id, (name, pos)) => pos == "postdoc" }.count
+graph.edges.filter { case Edge(src, dst, prop) => src > dst }.count

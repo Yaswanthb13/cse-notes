@@ -1,0 +1,19 @@
+import org.apache.spark._
+import org.apache.spark.rdd.RDD
+import org.apache.spark.graphx._
+
+val vertices=sc.parallelize(Array((1L,("austin",27)),(2L,("california",19)),(3L,("florida",34)),(4L,("newyork",10))))
+vertices.foreach(println)
+
+val edges=sc.parallelize(Array(Edge(1L,2L,7),Edge(1L,2L,6),Edge(2L,3L,8),Edge(3L,4L,9),Edge(1L,4L,3)))
+edges.foreach(println)
+
+val default = ("nothing",0)
+
+val graph=Graph(vertices,edges,default)
+
+
+1. graph.vertices.filter { case (id,(name,temp))=>temp>24}.collect()
+2. graph.edges.filter { case Edge(src,dst,frq)=>frq>5}.collect()
+3. graph.inDegrees.collect()
+4. graph.degrees.collect()

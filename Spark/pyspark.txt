@@ -1,0 +1,91 @@
+pyspark
+
+>> from pyspark.sql import SparkSession
+>> spark = SparkSession.builder.getOrCreate()
+>> data = spark.read.csv("C:/Users/yeswa/Downloads/color.csv",header=True,inferSchema=True)
+>> data.show()
+
+>> from pyspark.ml.feature import StringIndexer
+>> indexer = StringIndexer(inputCol = "colors", outputCol = "color_indexed")
+
+>> indexer_model = indexer.fit(data)
+>> indexer_data = indexer_model.transform(data)
+>> indexer_data.show()
+
+---------------------------------------------------
+>> data = spark.read.csv("C:/Users/yeswa/Downloads/wine.data",header=False,inferSchema=True)
+>> data.show
+
+Vector Assembler = Assemble all data into one particular unit(preparing data into one single entity)
+>> from pyspark.ml.feature import VectorAssembler
+>> assembler = VectorAssembler(inputCols=data.columns[1:],outputCol="feature")
+>> data1 = assembler.transform(data)
+>> data1.show()
+
+feature scaling - 
+
+StandardScalar - to keep data into standard form
+>> from pyspark.ml.feature import StandardScaler
+>> scalar = StandardScaler(inputCol="feature",outputCol="scaled-features")
+>> scalar_model = scalar.fit(data1)
+>> scaled_data = scalar_model.transform(data1)
+>> scaled_data.show()
+>> scaled_data.show(truncate=False)
+scaled feature calculation = (originalvalue-mean)/standard-deviation
+-----------------------------------------------------
+
+26/04 - Boston dataset
+
+>> from pyspark.sql import SparkSession
+>> spark = SparkSession.builder.getOrCreate()
+>> data = spark.read.csv("C:/Users/yeswa/Downloads/BostonHousing.csv",header=True,inferSchema=True)
+>> data.show()
+>> data.describe().select("summary","crim", "zn", "indus").show()
+>> feature_columns = data.columns[:-1]
+>> from pyspark.ml.feature import VectorAssembler
+>> assembler = VectorAssembler(inputCols=feature_columns,outputCol="feature")
+>> data1 = assembler.transform(data)
+>> data1.show() //shows top 20 rows
+>> data1.show(3) // shows 3 rows
+
+>> train,test = data1.randomSplit([0.7,0.3])
+>> from pyspark.ml.regression import LinearRegression
+>> algo = LinearRegression(featuresCol="feature", labelCol="medv")
+>> model=algo.fit(train)
+>> evaluation_summary= model.evaluate(test)
+>> evaluation_summary.meanAbsoluteError
+>> predictions=model.transform(test)
+>> predictions.select(predictions.columns[13:]).show()
+
+
+
+
+Iris-dataset
+>> from pyspark.sql import SparkSession
+>> spark = SparkSession.builder.getOrCreate()
+>> df = spark.read.csv("C:/Users/yeswa/Downloads/iris.csv",header=True,inferSchema=True)
+>> df.show()
+>>data.summary().show()
+>>data.describe().show()
+
+>> from pyspark.ml.feature import VectorAssembler
+>> vector_assembler = VectorAssembler(inputCols=df.columns[:-1],outputCol="feature")
+>> df1 = vector_assembler.transform(df)
+>> from pyspark.ml.feature import StringIndexer
+>> l_indexer = StringIndexer(inputCol = "species", outputCol = "labelIndex")
+>> df1=l_indexer.fit(df1).transform(df1)
+>> df1.show()
+
+>> train,test = df1.randomSplit([0.7,0.3])
+>> from pyspark.ml.evaluation import MulticlassClassificationEvaluator
+>> from pyspark.ml.classification import DecisionTreeClassifier
+>> dt=DecisionTreeClassifier(labelCol="labelIndex",featuresCol="feature")
+>> model=dt.fit(train)
+>> predictions=model.transform(test)
+>> predictions.select("prediction","labelIndex").show(5)
+
+
+evaluator=MulticlassClassificationEvaluator(labelCol="labelIndex",predictionCol="prediction",metricName="accuracy")
+accuracy = evaluator.evaluate(predictions)
+print("Test Error = %g " % (1.0 - accuracy))
+print(model)

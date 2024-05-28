@@ -1,0 +1,449 @@
+scala - data processing, distributed computing, and web development.
+        It allows to call java methods, inherit java classes
+        It is both object oriented (every value is object) and functional (every function is a value)
+
+Type Inference - Takes datatypes automatically without explicitly mentioning
+$ val a:Int=5 //mentions datatype without type-inference
+$ val a=5 //type-inference automatic conversion
+
+In scala variables are immutable(cannot modify) by default
+Scala evaluates only when required - Lazy computations - increase performance and reduce compile-time
+Scala supports HigherOrder functions - functions which takes functions as arguments, can also return functions along with simple data-types
+
+String Interpolation - allows to embed variables directly inside a string iteral
+ability to modify the string iterals using expressions
+3 types -s,f,raw interpolation
+1)s interpolation -use of variables directly within a string.
+val name=Yaswanth
+val message = s"my name is $name"
+2)f interpolation - to format a number as a string 
+val weight =50
+val msg=f"$weight"
+3)raw interpolation -doesn't recognize escape sequence 
+print("\nhi\nhello")  //prints in 2 lines
+print(raw"\nhi\nhello") 
+
+Traits - collection of abstract and non-abstract methods.
+
+------------------------------------------------------------------
+Variable declaration
+keyword variableName:dataType = Initial value
+val - immutable keyword (never reassigned)
+var - mutable keyword (can be reassigned)
+
+Printing Methods :
+1.print - just print everything one after another in same-line
+2.println - to display output on separate-line(next-line)
+3.printf - used for formatting text 
+$ printf("%d",13)
+
+
+val example : 
+val message:String="hello world"
+print(message)
+message="hello yash"
+//error : reassignment to val
+
+var example :
+var message2:string="hello world"
+print(message)  //o/p=hello world
+message="hello yash"
+print(message)  //o/p=hello yash
+
+
+-----------------------------------------------------------------
+Scala Type Hierarchy
+Any has 2 subclasses (AnyVal, AnyRef)
+
+AnyVal refers to value types
+Anyval has 9 value types : Double, Float, Long, Int, Short, Byte, Char, Unit, Boolean
+
+AnyRef refers to reference types 
+Any type that i not above 9 value types are considers AnyRef including userdefined
+AnyRef has List, Iterable, Seq, Strings and some java,scala classes
+------------------------------------------------------------------------
+
+Type Casting
+changing the datatype of the existing variable
+
+Rule :
+Double <- Float <- Long <- Int <- Short <- Byte
+                            ^
+                            |
+                           Char
+example : float can convert to double but not viseversa
+          arrows are the direction of conversion
+
+val a:Long=926371285
+val b:Float=a
+//valid conversion
+then, val c:Long=b
+//error : type mismatch
+
+char to int gives ascii values
+-------------------------------------------------------------------------------
+
+Operators
+Arithmetic, Relational, Logical, Bitwise, Assignment Operators
+Arithmetic + - * / %
+Relational > < >= <= !=
+Logical && || !
+Bitwise & | ^ ~ <<
+Assignment += -= *= /= %=
+
+val a=10
+val b=7
+print(a+b)
+print(a>b)
+val c=true
+val d=false
+print(c && d)
+print(~a)
+print(a | b)
+print(a & b)
+
+var a=10
+var b=7
+a+=b
+print(a)
+----------------------------------------------------------------------------
+
+literal = constant
+
+String literals - surrounded by " "
+val stringliteral:String="Hello"
+
+Integer literals used with types long,int,short,byte
+comes in 2 forms decimal and hexadecimal
+val dec:Int=245
+val hex:Int=0x0F5
+
+Floating-point Literals double and float
+val floatlit:Float=1.255F
+val bigger:Double=1.2564894e4
+
+character literal surrounded by ' '
+val charlit:Char='A'
+-------------------------------------------------------------------------------
+
+Functions/Methods - block of code performs a specific task takes input as arguments and perorm operations on that input and return the output
+
+1. Built-In Functions (Methods)
+2. User-Defined Functions
+
+example - 
+val st1="hello world"
+val result=st1.indexOf('w')    //indexOf is method
+print(result)
+
+var s1="hello"
+s1.toUpperCase()
+---------------------------------------------------------------------------------
+
+Strings :
+
+val s1="what is the length of the string?"
+s1.length()
+
+//concatenation
+print("Hello" + "welcome")
+val s1="hello"
+val s2=" world"
+print(s1+s2)
+
+//string equality
+val s1="ubd"
+val s2="UBD"
+print(s1==s2)
+
+//Multiline string
+val multiline="""
+              |line1
+              |line2
+               """
+//splitting string
+val splitpizza="pizza,tomato,cheese,toppings".split(",")
+splitpizza.foreach(println)
+
+//regular expressions methods
+val reg="H".r
+val replacein="Hello World"
+val replaced = reg.replaceFirstIn(replacein,"J")
+print(replaced)
+val replaced = replacein.replaceAll("o","J")
+val replaced = reg.replaceAllIn(replacein,"J")
+
+//comparing Strings
+.matches, .equals, .compareTo, .equalsIgnoreCase
+
+val s1 = "abc"
+val s2="aBc"
+val s3="abc"
+s1.matches(s2) //false
+s1.matches(s3) //true
+s1.equals(s2) //false
+s1.equals(s3) //true
+
+s1.compareTo(s2) //s2-s1 32
+s1.compareTo(s3) //s3-s2 0
+s2.compareTo(s1) //s1-s2 -32
+if we get +ve number string1>string2 and viceversa and if we get 0 then both strings are equal
+
+s1.equalsIgnoreCase(s2) //true (ignore cases)
+s1.equalsIgnoreCase(s3) //true
+---------------------------------------------------------------------------------------------------
+
+Classes and objects
+Classes are like blueprints with which you can create an object
+Object is an instance of a class we use in out program
+properties of the class are methods and members
+
+1.Build-In classes
+2.User-Defined classes
+---------------------------------------------------------------------------------------------------
+
+Collections :
+Each collection in scala is mutable and immutable collection
+Mutable collections - elements can be added or removed or manipulated in the collection
+Immutable collections - collections which cannot be updated
+Note : when you add,delete or manipulate in immutable collection, you are actually creating a new collection and leaving old collection unchanged
+
+3 main collection classes and all 3 classes contain mutable,immutable collections
+Sequences - Seq
+Sets -Set
+Maps - Map
+
+Apply method is used
+
+Sequences - store elements at fixed index positions
+Index starts at 0 
+index is passed to apply and return the element at specific index
+$ val a=Seq(2,3,4,5,6,8)
+$ a.apply(1)
+
+Sets - No duplicates
+element is passed to apply and return true if it is present 
+$ val b=Set("apple","orange","banana","grape")
+$ a.apply("apple")
+
+Maps - consists pairs of keys and values, each value is associated with unique key
+key is passed to apply and return value
+$ val c=Map(("a",22),("b",13),("c",21))
+$ a.apply("a")
+
+
+Sequence is again divided into 2 classes IndexedSeq and LinearSeq
+IndexedSeq = Vector, Array, ArraBuffer, Range
+LinearSeq = List, Stream
+------------------------------------------------------------------------------------------------------
+
+foreach - A collection method
+from above examples ->
+syntax = collectionName.foreach(method)
+a.foreach(println)
+b.foreach(println)
+-------------------------------------------------------------------
+
+Array collection
+
+It belongs to collection in Sequence class
+It is mutable collections, so we can update/change the array
+Array store elements of same type
+keyword - Array()
+syntax = val arrayname = Array(element1,ele2,ele3,....,elen)
+
+val intarr=Array(1,2,3,4,5,6,7,8,9,10)
+val even=intarr.filter(_%2==0)
+val doublear=intarr.map(_*2)
+val rev=intarr.reverse
+
+if we don't know what we need to give in array initially, we can use 'new' keyword to populate
+val myarr=new Array[String](3)
+myarr(0)="red"
+myarr(1)="black"
+myarr(2)="orange"
+myarr.foreach(println)
+
+
+To populate the array initially we have different methods :
+//Using range
+val arr1=Array.range(0,5)
+arr1.foreach(println)
+
+//Using fill
+val arr2=Array.fill(2)("abc")
+arr2.foreach(println)
+
+//Using toArray
+val arr3="hello".toArray
+arr3.foreach(println) 
+
+Access elements of array
+syntax =arrayname(index)
+arr1(2)
+arr2(1)
+arr3(0)
+
+To find the length of array
+syntax = arrayname.length
+arr1.length
+arr2.length
+arr3.length
+
+//concatenate 2 arrays using ++
+val array1 = Array('a', 'b', 'c')
+val array2 = Array('d', 'e', 'f')
+val concatenatedArray = array1 ++ array2
+-------------------------------------------------------------------------------------------------------
+
+ArrayBuffers
+
+It is a collection in sequence class
+It is a mutable collection
+ArrayBuffer store elements of same type
+we can add and remove the elements from ArrayBuffer while adding and removing is not possible in Arrays
+Array methods and operations are applicable to Arraybuffers as well
+
+To use ArrayBuffer :
+import 	scala.collection.mutable.ArrayBuffer
+
+syntax = val arrbuff = new ArrayBuffer[datatype]()
+
+Adding elements: we use assignment operator +=
+Remove elements: we use assignment operator -=
+
+val arb=new ArrayBuffer[Int]()
+arb+=1
+arb+=2
+arb+=3
+arb.foreach(println)
+remove elements
+arb-=3 //giving the element (remove element)
+arb.remove(2) //giving index to remove element at that index
+arb.clear() //remove all elements
+-----------------------------------------------------------------------------------------------------
+
+List
+It is a collections in sequence class
+It is an immutable collection, hence when we modify any existing list, it wont get modified but a new list is created
+Like array and arraybuffers, List store elements of same type (homogeneous data is stored)
+
+creating/populating list :
+
+val fruit=List("orange","banana","papaya","grape")
+fruit.foreach(println)
+
+//using range
+val intlist=List.range(1,10)
+intlist.foreach(println)
+
+//Using fill
+val mylist=List.fill(3)("abc")
+mylist.foreach(println)
+
+
+//**// Creating list using cons :: method and nil
+val veg="carrot"::"beetroot"::"potato"::Nil
+veg.foreach(println)
+
+//append elements to last
+val veg1=veg :+ "beans"
+veg1.foreach(println)
+
+//append elements to first or prepending
+val veg2="tomato" +: veg
+or
+val veg2="tomato" :: veg
+
+//list concatenation
+val vegcon = veg1 ::: veg2
+
+veg.head //only 1st element
+veg.tail //all elements except 1st
+-------------------------------------------------------------------------------------------------------
+
+Vectors 
+Like lists, Immutable collections of sequence type
+Only difference is lists are linear and vectors are indexed
+keyword : Vector()
+val num=Vector(1,2,3,4,5)
+
+Initializing Vector :
+
+//initialize empty vector using empty method
+val empvec=Vector.empty
+
+//Access element
+vectorname(index)
+num(2)
+
+//Append element
+:+ method
+val vec1=num :+ 13
+
+//prepend element
++: method
+val vec2=21 +: num
+
+//Vector concatenation
+++ method
+vec1 ++ vec2
+------------------------------------------------------------------------------------
+
+LazyList 
+Immutable collection of sequence type similar to lists
+Lazy because it computes elements only when they are needed
+
+LazyLists are created using #:: method similar to :: method in lists
+We use LazyList.empty to end a lazylist similar to Nil in lists
+Syntax : head #:: tail#:: LazyList.empty
+
+when doing heavy computation/calculation it is mostly useful
+
+Only difference b/w Streams is Streams computes the head element even when not required
+$ val mylazy=1.5 #:: 2.5 #:: 3.4#::LazyList.empty  //this works only from 2.13 version)
+so,
+$ val mylazy=1.5 #:: 2.5 #:: 3.4#::Stream.empty
+------------------------------------------------------------------------------------------
+
+Functions in scala
+
+syntax :
+def functionname(parameter):returntype={functionbody}
+
+$ def sum(x:Double,y:Double):
+  Double={x+y}
+$ sum(1.2,3.1)
+
+$ def sq(x:Double):Double={x*x}
+$ sq(5)
+
+$ def sqsum(x:Double,y:Double):Double={sq(x)+sq(y)}
+$ sqsum(3,4)
+
+Evaluation - call_by_value, call_by_name
+advantage of call_by_value (CBV) is it evaluates every function argument only once
+example:
+def fun(int x,int y):int={print(x)}
+fun(1+1,2+3)
+callbyvalue = fun(2,5) //it evaluates the values
+callbyname = fun(1+1)-->fun(2)-->2  //it doesn't need y so it don't compute y
+
+
+Recursion fuctions
+
+def fact(x:Int):Int={
+if(x==1)
+1
+else
+x*fact(x-1)
+}
+fact(5)
+
+
+Higher-Order Functions
+functional programming languages treat functions as first-class values
+Functions can be passed as a parameter to another function and also can be returned as a result
+simply, functions which can take other functions as parameter and can return a function as result
+syntax : def square(functionname:Int=>Int)={.....}
+

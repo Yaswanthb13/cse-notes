@@ -1,0 +1,134 @@
+RDD - resilient distributed dataset
+resilent(fault tolerance),Distributed in its nature,dataset  
+Immutable
+Primary user facing api in spark
+data will be processed by parallel
+
+Create an RDD by 4 methods
+1st method:-
+var r1=spark.sparkContext.parallelize(Seq(("a",1),("b",2)))
+r1.collect()
+r1.foreach(println) 
+var r1=spark.sparkContext.parallelize(Array(1,2,3,4,5))
+  
+
+2nd method:-Providing text file
+val r2 = spark.sparkContext.textFile("C:/Users/yeswa/Desktop/rddex.txt")
+r2.collect()
+r2.foreach(println)   
+
+3rd Method:-Create rdd from existing rdd using flatMap
+val r3=r2.flatMap(_.split(" "))
+// _ is called placeholder
+r3.collect()
+r3.foreach(println)  
+
+4th Method:-create rdd using dataframe
+val r4=spark.range(10).toDf().rdd
+r4.collect()
+r4.foreach(println)  
+-------------------------------
+
+RDD Transformations
+1.map
+function will be applied to every element
+val g = sc.textFile("C:/Users/yeswa/Desktop/rddex.txt")
+val mp=g.map(l=>(l.length))
+mp.collect()   //prints/returns the length
+
+2.flatMap
+val fmp=g.flatMap(i=>i.split(" "))
+fmp.collect()
+fmp.foreach(println)
+//map return only one element but flatMap returns list of elements.
+
+3.filter
+val nums=sc.parallelize(1 to 20)
+nums.collect()
+val even=nums.filter(i=>i%2==0)
+even.collect()
+
+4.Union()
+//combine 2 rdd
+val x=sc.parallelize(Array(1,2,3,4))
+x.collect()
+val y=sc.parallelize(Array(4,5,6,7))
+y.collect()
+val un=x.union(y)
+un.collect()
+
+5.Intersection
+val in =x.intersection(y)
+in.collect()
+
+6.distinct
+val dup=sc.parallelize(Array(1,2,3,4,5,1,2,3,4,5,1,1))
+val dis = dup.distinct()
+dis.collect()
+
+7.GroupByKey
+val data=sc.parallelize(Array(('a',1),('b',2),('c',3),('a',5),('b',2)),3)
+val group=data.groupByKey()
+group.collect()
+group.foreach(println)
+
+8.reduceByKey
+val words = Array("one","one","two","two","two","three")
+val r  = sc.parallelize(words).map(i=>(i,1)).reduceByKey(_+_)
+
+9.sortByKey
+//Sorted Order
+val r=sc.parallelize(Seq(("A",2),("Y",4),("Q",7),("F",6)))
+val sorted=r.sortByKey()
+sorted.collect()
+
+10.join()
+val q=sc.parallelize(Array(('a',1),('b',2),('c',3)))
+val p=sc.parallelize(Array(('a',1),('c',2),('c',3)))
+val o=q.join(p)
+o.collect()
+o.foreach(println)
+
+11.coalesce
+//used to avoid full shuffling of data
+//It will reduce the number of partitions
+val i=sc.parallelize(Array("A","B","C"),3)
+i.getNumPartitions //3
+val c=i.coalesce(2)
+c.getNumPartitions  //2
+c.collect()
+c.foreach(println)
+-----------------------------------
+
+RDD functions/Actions
+1.Count
+val g = sc.textFile("C:/Users/yeswa/Desktop/rddex.txt")
+val c=g.flatMap(_.split(" ")).count()
+
+2.collect	
+val c=g.flatMap(_.split(" ")).collect()
+
+3.Take
+similar to limit in sql (to limit the output)
+val c=g.flatMap(_.split(" ")).take(1)
+
+4.Top
+similar to OrderBY clause in sql which is used to print the data in ascending or descending order
+val top=g.flatMap(_.split(" ")).top(2)
+
+val v2 = r2.flatMap(_.split(' ')).takeOrdered(3)(Ordering[String])
+val v2 = r2.flatMap(_.split(' ')).takeOrdered(3)(Ordering[String].reverse)
+
+
+5.countByValue
+val cbv=g.flatMap(_.split(" ")).countByValue()
+
+6.Reduce
+val b=sc.parallelize(Array(1,2,3,4,5,6))
+val red=b.reduce(_+_)
+//returns the sum of elements
+
+7.foreach
+v1.foreach(println)
+
+-----------------------------------

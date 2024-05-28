@@ -1,0 +1,83 @@
+********************Apache Spark Installation Steps on windows****************
+
+Pre-requisites:
+
+Download JDK - https://www.oracle.com/java/technologies/downloads/#java8-windows
+
+
+Download Python - https://www.python.org/downloads/             ( by clicking add to path )
+Download Spark -  https://spark.apache.org/downloads.html (spark version 3.3.4 and package type as pre-built for apache hadoop 3.3 and later)
+
+
+
+STEP 1: Install python by clicking on add to path checkbox at the time of installation.
+
+verify python version using :
+
+java --version
+
+python --version
+
+
+STEP 2: create a folder named "spark" in C drive. Extract the downloaded sprk file in the spark folder of C drive
+
+Path spark folder of c drive after extracting the file will look like:
+
+
+C:\spark\spark-3.3.4-bin-hadoop3
+
+
+STEP 3: Edit system environment variables
+
+create a new environment variable
+
+Variable Name: SPARK_HOME
+Value: C:\spark\spark-3.3.4-bin-hadoop3
+
+Also edit the 'Path' variable and add %SPARK_HOME%\bin as a new path.
+
+********AND THAT'S IT. INSTALLATION COMPLETED.*****
+
+Now run spark using CMD,
+
+OPEN CMD..
+
+spark-shell
+
+
+and then scala shell will be opened after execution of above command as 'scala>'
+
+
+
+
+
+**********************************************************************************************************************
+
+IF HADOOP IS NOT INSTALLED THEN FOLLOW THE BELOW MENTIONED ADDITIONAL STEPS FIRST FOR INSTALLATION OF SPARK
+
+
+Additional step 1: Download java (jdk and jre 64 bit)
+
+Additional step 2: Download hadoop winutils.exe file ( as per version choosed at the time of spark installation )
+
+https://1drv.ms/f/s!ArSg3Xpur4Grml7l087JBp_4bzks?e=aSqIQV   (for hadoop 3.2.4 use this link)
+
+And place in c drive after creating a folder named as hadoop as given below path.
+
+C:\hadoop\winutils.exe
+
+Additional step 3: Set up environment variable:
+
+JAVA_HOME : C:\Progra~1\Java\jdk-1.8		// check the version and accordingly edit the path 
+
+HADOOP_HOME : C:\hadoop
+
+
+AND Now follow the above mentioned steps for installation.
+
+
+
+
+
+
+

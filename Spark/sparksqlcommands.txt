@@ -1,0 +1,65 @@
+Steps to run sql-queries :
+1.create sparksql session
+import org.apache.spark.sql.SparkSession
+val spark = SparkSession.builder().appName("KMo27").config("spark.master","local").getOrCreate()
+
+2.Create a Data Frame from CSV
+val df=spark.read.option("header", true).csv("D:/All Semester Materials/8th sem/Spark/lpu-live files/a (1).csv")
+df.show()
+df.printSchema()
+
+3.Convert CSV File into table
+spark.read.option("header",true).csv("D:/All Semester Materials/8th sem/Spark/lpu-live files/a (1).csv").createOrReplaceTempView("abc")
+val df = spark.table("abc")
+df.show()
+4.Use of SQL Queries.
+
+
+
+
+//spark sql session
+import org.apache.spark.sql.SparkSession
+	
+$ import org.apache.spark.sql.{SparkSession,DataFrame}
+$ val spark = SparkSession.builder().appName("KMo27").config("spark.master","local").getOrCreate()
+$ val empdata = Seq((1,"leela",101,60000),(2,"pourush",102,55000),(2,"mukul",101,62000),(3,"ritesh",103,58000))
+$ val empdf:DataFrame = spark.createDataFrame(empdata).toDF("empid","empname","deptid","salary")
+$ empdf.createOrReplaceTempView("employees")
+
+
+$ val deptdata = Seq((101,"IT"),(102,"R&D"),(103,"Finance"))
+$ val deptdf:DataFrame = spark.createDataFrame(deptdata).toDF("deptid","deptname")
+$ deptdf.createOrReplaceTempView("departments")
+
+
+$ val first = spark.sql(""" select e.,d. from employees e inner join departments d on e.deptid=d.deptid """)
+$ first.show()
+$ val second = spark.sql(""" select e.,d. from employees e left outer join departments d on e.deptid=d.deptid """)
+$ second.show()
+$ val third = spark.sql(""" select e.,d. from employees e right outer join departments d on e.deptid=d.deptid """)
+$ third.show()
+$ val fourth = spark.sql(""" select e.,d. from employees e full outer join departments d on e.deptid=d.deptid """)
+$ fourth.show()
+$ val fifth  = spark.sql(""" select e.*,d.* from employees e cross join departments d """)
+$ fifth.show()
+$ val six = spark.sql(""" select e.*,d.* from employees e inner join departments d on e.deptid=d.deptid where e.salary>50000 """)
+$ six.show()
+$ var seven = spark.sql(""" select e1.*,e2.* from employees e1 join employees e2 on e1.deptid=e2.deptid """)
+$ seven.show()     
+
+
+val emp1 = sc.parallelize(Array((10,"Inventory","Hybd"), (20,"Finance","bglr"), (30,"HR","Mumbai"), (40,"Admin","che"))).toDF("Deptno","Dname","Loc")
+
+val emp2 = sc.parallelize(Array((111,"Saketh","analyst",444,10), (222,"Sudha","clerk",333,20), (333,"Jagan","Manager",111,10), (444,"madhu","engineer",222,40))).toDF("Empno","Ename","job","Mgr","DeptNo")
+
+emp1.join(emp2,"DeptNo").show()
+emp1.join(emp2,Seq("DeptNo"),"inner").show()
+
+emp1.join(emp2,Seq("DeptNo"),"left_outer").show()
+emp1.join(emp2,Seq("DeptNo"),"right_outer").show()
+emp1.join(emp2,Seq("DeptNo"),"full_outer").show()
+
+emp1.crossJoin(emp2).show()
+emp1.join(emp2,Seq("DeptNo"),"cross").show()
+
+emp1.join(emp2,seq("DeptNo"),"left_semi").show()

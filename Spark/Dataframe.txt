@@ -1,0 +1,25 @@
+Dataframe -
+Distributed collection of tabular data in the form of rows and columns
+
+Methods to create dataframe
+1.
+import spark.implicits._
+
+val data = Seq(("India", 300),("Australia", 280),("England",275))
+val rdd=sc.parallelize(data)
+val df1=rdd.toDF("Team","Score")
+df1.show()
+
+2.
+val rdd=sc.parallelize(Seq(("yash",22),("surya",20)))
+val df = spark.createDataFrame(rdd).toDF("Name", "Age")
+
+3.read from a file
+val df3 = spark.read.csv(“file path”) 
+
+val df=spark.read.csv("D:/All Semester Materials/8th sem/Spark/lpu-live files/a (1).csv")
+df.show()
+
+to create a table from the df:
+import org.apache.spark.sql.SparkSession
+df.createOrReplaceTempView("abc")

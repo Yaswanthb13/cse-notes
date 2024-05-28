@@ -1,0 +1,44 @@
+Step-1
+
+Initialize the zookeeper
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+Step 2 
+
+Initialize the kafka
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+
+Step 3
+
+create topic
+
+C:\kafka\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --topic test
+
+NOTE:
+ 
+TO create partition in topic use --partition
+
+C:\kafka\bin\windows\kafka-topics.bat --create --bootstrap-server localhost:9092 --partitions 3 --topic part1 
+
+--describe will provide information of the partitions in a topic
+
+C:\kafka\bin\windows\kafka-topics.bat --describe --bootstrap-server localhost:9092
+
+Step4
+
+Listing topics
+
+C:\kafka\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+
+Step 5 
+Running the producer
+
+C:\kafka\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic test
+
+step6
+
+Running the consumer
+
+C:\kafka\bin\windows\kafka-console-consumer.bat --topic test --bootstrap-server localhost:9092 --from-beginning
