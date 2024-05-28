@@ -1,0 +1,61 @@
+Hemanth set-A
+
+2.
+a) sudo useradd vikas
+sudo useradd harish
+sudo useradd john
+sudo useradd andrew
+sudo passwd vikas
+sudo passwd harish
+sudo passwd john
+sudo passwd andrew
+sudo touch /home/vikas/welcome
+sudo touch /home/harish/welcome
+sudo touch /home/john/welcome
+sudo touch /home/andrew/welcome
+
+b)sudo passwd -e --minlen=6 <username>
+
+or  to make changes in system-wide
+sudo chage -M 45 vikas
+sudo chage -M 45 harish
+sudo chage -M 45 john
+sudo chage -M 45 andrew
+sudo nano /etc/login.defs
+PASS_MIN_LEN    6
+save and exit
+
+c)sudo nano /etc/profile.d/welcome.sh
+#!/bin/bash
+
+echo "Welcome, $(whoami)"
+
+
+d)Hard link
+sudo ln /home/vikas/welcome /home/vikas/link-welcome
+sudo ls -i /home/vikas/welcome 
+sudo ls -i /home/vikas/link-welcome
+
+e)sudo groupadd Indian 
+sudo usermod -aG Indian vikas 
+sudo usermod -aG Indian harish 
+groups vikas
+groups harish
+
+f)sudo groupadd USA 
+sudo usermod -aG USA john
+sudo usermod -aG USA andrew
+groups john
+groups andrew
+
+g)sudo groupmod -n Bharat Indian
+getent group Bharat
+
+h)sudo passwd --expire john && sudo chage -m 5 -E -1 john
+or  sudo chage -d 0 -m 5 -E -1 john
+
+i)cp -r /home/raf/email /home/A/B/C/
+
+j)date -d "+180 days"
+
+

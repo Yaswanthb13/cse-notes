@@ -1,0 +1,20 @@
+niceness
+
+higher the nice value lower the priority
+$ nice 
+default value is 0
+
+$ renice -n -20to19 -p pid
+$ ps -l
+
+example
+
+$ sleep 1000000 &
+//made the sleep in background
+to come to foreground
+$ jobs
+$ fg %1
+
+$ ps -l
+$ renice -n -10 -p 3676
+

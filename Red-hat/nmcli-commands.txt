@@ -1,0 +1,29 @@
+cd /etc/NetworkManager
+cd system-connections
+ls
+
+ip address show
+ifconfig
+ip link show
+
+cd ~
+nmcli con show  //connections whichare active are shown
+nmcli con down <conection_name>  //deactivate connections
+nmcli con up <connection_name>   //activate or start connections
+
+total interfaces/devices in your system - $      nmcli device show
+
+----------
+nmcli con add type ethernet con-name cse423 ifname ens160 ipv4.addresses 192.168.233.134/24 ipv4.gateway 255.255.255.1 ipv4.dns 8.8.8.8 ipv4.method auto
+
+/etc/NetworkManager/system-connections
+ls
+
+nmcli con show
+nmcli con show --active
+cat cse423.nmconnection   //to view the created connection
+
+nmcli con mod cse423 ipv4.addresses 1.1.1.0/24
+nmcli con up cse423
+nmcli con down cse423
+nmcli con delete cse423

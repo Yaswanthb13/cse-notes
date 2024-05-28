@@ -1,0 +1,38 @@
+SE-Linux
+
+Modes- enforcing, permissive, disabled
+$ getenforce
+$ setenforce 0
+0-> permissive, 1->enforcing
+
+
+$ sestatus
+if they ask to disable the selinux policy then we need to change configuration file -
+/etc/sysconfig/selinux
+make changes in line as 
+SELINUX=disabled
+restart system.
+
+
+Selinux bool 
+eg:
+$ getsebool -a | grep "httpd"
+$ setsebool -P httpd_enable_homedirs on
+$ getsebool -a | grep "httpd"
+
+Selinux port
+httpd port is 80
+we need to change the port 82 and change should be start at boot time (persistent)
+semanage port -a -t http_port_t -p tcp 82
+
+Selinux context
+ensure httpd service is able to access and host files from /test directory
+bydefault httpd/apache ->var/www/html
+$ yum install httpd
+
+
+
+semanage fcontext -a -t httpd_sys_content_t "/directory(.*)?"
+restorecon -Rv /directory
+ls -lZ
+systemctl restart httpd

@@ -1,0 +1,87 @@
+
+
+ssh commands
+a access B
+
+machine A,B
+
+A-
+ssh usernameB@ipaddressB
+ssh usernameB@hostnameB
+to check entries 
+cat ~/.ssh/known_hosts
+rm -rf .ssh/known_hosts
+---------------------------------------------------------------
+
+Access through hostname
+in B (change the hostname to any small name)
+$ sudo hostnamectl set-hostname new_name
+
+in A
+$ sudo nano /etc/hosts
+ipB hostnameB  (add this line)
+save and exit
+
+now ssh
+$ ssh usernameB@hostnameB
+----------------------------------------------------------------
+
+Allow root login
+in B
+cp /etc/ssh/sshd_config  /opt/
+nano /etc/ssh/sshd_config
+#PermitRootLogin prohibit-password -> PermitRootLogin yes
+save and exit
+$ systemctl restart sshd
+
+In A
+$ ssh usernameB@ipaddressB
+$ ssh usernameB@hostnameB
+
+now machine A can access root of machine B
+----------------------------------------------------------------------
+
+Without password using keys
+generate public,private keys from machineB and copy public key to machineA
+***A will access B so A-public-key is added to machineB ***
+
+In A (root)
+create keys
+$ ssh-keygen
+$ ls .ssh
+$ cat .ssh/id_rsa.pub
+now we need to copy this public key to the machine B so that machineA can access machineB
+2methods:
+1)
+$ssh-copy-id ipaddressB
+(this copies public key to root of machineB , so in machineA we need to PermitRootLogin yes in nano /etc/ssh/sshd_config)
+To verify, 
+In A(root)
+$ ls .ssh/
+$ cat .ssh/authorized_keys
+2)
+scp .ssh/id_rsa.pub ipaddressA:location
+eg: scp .ssh/id_rsa.pub 192.168.233.129:/
+To verify,
+In A(root)
+$ ls /
+$ cat /id_rsa.pub
+
+Now we can login to machine B without password
+$ ssh ipaddessB
+--------------------------------------------------------------------------------------------------
+
+Block root user to log on the system using ssh.
+PermitRootLogin no
+
+DenyUsers user1
+DenyUsers user3 user4
+
+AllowUsers user2  or AllowUsers user2@192.168.1.10 
+AllowUsers user1 user2
+
+Systemctl sshd reload or systemctl restart sshd
+-------------------------------------------------------------------
+To change the default SSH port in Linux, you can modify the SSH daemon configuration file located at ` /etc/ssh/sshd_config` . Look for the line containing “Port” and change the port number to your desired value. After making the change, restart the SSH service
+
+

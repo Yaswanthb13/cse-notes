@@ -1,0 +1,69 @@
+partition-commands
+
+1.create partition
+2.delete partition
+3.create a file-system
+4.mount the partition(temp/permanent)
+
+commands:
+1.fdisk
+2.mkfs
+3.mount(for temp mount)
+4.edit fstab file(permenant mount)
+
+$ fdisk -l (to see the disks and locations)
+$ fdisk /dev/nvme0n2
+   (use generic options)
+   n -> new partition
+   p -> primary
+   1 -> first partition or just click enter
+   click enter for first sector(so default)
+   +250M (for 250mb partition)
+   p -> prints the partition
+   d -> delete the partition
+   give partition number (eg - 2 for deleting 2nd partition)
+   t -> to change type of partition
+   l -> list the partition types with hex code
+   w -> make/save changes
+   q -> quit without saving changes
+
+$ lsblk
+{  $ df -h //shows partitons information 
+   $ blkid //partitions information with uuid  }
+
+//temporary mounting
+
+$ mkfs.ext2 /dev/nvme0n2p1
+$ mkdir mount_dir
+$ mount /dev/nvme0n2p1 mount_dir (temporary mount)
+$ lsblk
+$ mount -a
+$ systemctl daemon-reload
+$ lsblk
+
+
+//persistent mounting
+
+$ nano /etc/fstab
+/dev/nvme0n2p1 	/root/mount_dir	ext2 defaults 0 0
+or
+UUID="cfd82771-b431-44ef-8196-0c78711b7f9a" /root/mount_dir ext2 defaults 0 0 (this is more preferred than above)
+$ mount -a
+$ systemctl daemon-reload
+$ lsblk
+
+$ init 6 (to restart system)
+
+
+To delete the partition (from permanent)
+$ nano /etc/fstab
+remove the line added for the corresponding partition mount and save and exit
+$ umount /dev/nvme0n2p1  (unmount)
+$ mount -a (refresh to check)
+$ lsblk 
+$ fdisk /dev/nvme0n2
+   d -> delete partition
+   give number which partition is needed to delete (if only 1partition made, it automatically deletes)
+   w ->save changes
+$ lsblk
+   

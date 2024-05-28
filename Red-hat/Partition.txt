@@ -1,0 +1,72 @@
+Partition
+
+1) Partition
+2) Format partition with a file system
+
+3) Mounting: attach a directory to the partition
+Mounting 2 types: temporary and permanent
+for temparary use mount command
+for permanent we need to change configuration file like fs-tab
+/etc/fstab
+
+4) Inform the Kernal to use the partition
+commands - partprobe or mount -a (refresh/restart)
+
+$ fdisk -l
+$ lsblk
+$ blkid
+
+
+6 parameters- for swapping permanent in the fstab file
+uuid
+mount point by the name of 'swap'
+file system by the name 'swap'
+defaults
+5-0 backup any time 
+6-0 start all services at boot
+
+6 parameters for persistent mounting in fstab
+uuid
+mounting directory name
+file system name eg - ext2
+defaults
+0
+0
+
+before deleting any disks we need to remove every thing related to that disk written in the fstab file
+
+
+swap is present in secondary storage as it is twice the memory of ram
+swap space contains entire replica of ram that helps in recovery, keeps backup of ram
+swap space is twice size of ram used for replica
+game is 50gb and ram is 8gb, but until the game is loaded in ram we cannot enter, here main memory/secondary is divided into so many pages and pages are loaded by frames in primary/ram so by swap in and swap out we can load the game
+
+
+Persistent mounting /permanent Mounting
+create a partition 
+mkdir mount_dir
+mount -a
+cd /etc/
+nano fstab
+blkid for uuid
+UUID=af4eb3ea-6aff-4a68-8f00-5c70f0b846e5 /home/yaswanth/mount_dir ext2 defaults 0 0
+save and exit file
+mount -a
+systemctl daemon-reload
+lsblk
+
+
+Mounting - temporary
+create a partition 
+mkdir mount_dir
+mount -a
+mkfs.ext2 /dev/nvme0n3p1
+mount /dev/nvme0n3p1 /home/yaswanth/mount_dir
+mount -a
+systemctl daemon-reload
+lsblk
+
+
+for swap partition we use mkswap /dev/nvme0n3p1
+we get the uuid and use remaing steps for mounting
+

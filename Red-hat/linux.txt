@@ -1,0 +1,1124 @@
+
+man touch-->shows the manual of file
+
+touch is used to create empty file
+
+ll first.txt-->shows the type,permissions,owner,owner group,space,time and date,file name
+
+touch -a first.txt->it takes the same file name as it is previous
+
+if we want to create a new file with same time as it is in previous we use -->touch -r first.txt new.txt
+
+if we want to assign a creation time to the file-->touch -d 09:30 new.txt
+
+cat>new.txt -->it is used to add the content to that file and press ctrl+d to save and exit
+
+cat new.txt-->shows the content of the file
+
+cat -n new.txt-->shows the numbering to the content
+
+echo "lpu">>new.txt  --> this keeps the previous content and add new content to it(>>)
+
+cat first.txt new.txt llff.txt > target.txt   -->this copies all the files content to target file
+
+vim-->i-insrt,esc and (:wq!)-->to save and exit the file
+
+head->it is used to show the specific number of lines in a file
+(head -n 5 new.txt) or (head -5 new.txt)
+
+
+head -c 15 new.txt-->this shows only 15 characters from start
+
+wc -l monts.txt--> shows the number of lines
+(wc)-->word count
+
+wc new.txt-->gives number of lines , words , and characters in that file
+
+cp source destination--> is used to copy the content of one file to another
+
+mv 1.txt 2.txt-->this moves the file's content into new file and the previous file will be deleted
+
+cp -i t1 t2(do it two times) then it will ask to rewrite or not
+
+rm -r -f -->this command is used to remove non empty directories
+
+rmdir -->to remove empty directories
+
+:wq!-->to save and exit
+!-->forcefully
+q->quit without save
+
+how to change host name
+****************************
+
+hostname-->gives hostname
+hostnamectl status --static -->gives the host name
+
+hostname NEWHOST 
+use super user---->su -
+give pass
+hostname NEWHOST
+bash
+hostnamectl set-hostname 1207874
+bash
+
+to change permanently
+**************************
+
+cat /etc/hostname
+vim /etc/hostname
+bash-->to restart
+
+
+to find file
+****************
+
+ls b*-->this shows files starting with b
+ls *b-->this shows files ending with b
+ls *a*-->this shows files which contains character a in between
+ls [ac]*-->this shows files starting with a and c
+echo f{1..3}.txt-->f1.txt f2.txt f3.txt
+ls ???-->this shows files names having 3 characters
+ls ~-->shows files in home directory
+
+user Management/local-user Management(mgmt):
+*******************************************
+create(useradd)
+modify(usermod)
+delete(userdel)
+/etc/passwd->where every local user account information is present(catr,vim->we can open)
+syntax:
+useradd [option] login-name
+
+tail -1 /etc/passwd-->this gives the username which we have created
+
+bh:x:1006:1009::/home/bh:/bin/sh
+1.username 2.password 3.UID.GID 5.Geos/comment 6.homedir 7.default shell
+
+if we want to add comments the we use "-c"
+useradd -c "kumar" robin->here kumar is comment
+
+if we want to give userid then we use "-u"
+useradd -u 4321 robin11
+
+if we want to give homedir then we use "-d"
+useradd -d "/home/nit" robin11
+
+if we want to give default shell then we use "-s"
+useradd -s "/bin/ksh" robin11
+
+if we want to assign any group id then group should be created already
+useradd -g 4321 robin
+
+Modification
+************************
+
+if we want to add comment to already created user then we use 
+usermod -c "kum" robin333
+
+if we want to change username by using "-l"
+usermod -l peter robin333
+
+if we wanted to lock any account the we use "-L"
+usermod -L peter
+--then it will ask for password to lock
+
+if we wanted to unlock any account the we use "-U"
+usermod -U peter
+
+
+to add group
+-->groupadd cricket
+
+primary group(-G)-->if user is associated with only one grp
+
+supplementry group(-aG)-->if user is associated with more than one grp
+
+usermod -G cricket peter-->peter is in cricket grp
+
+groupadd fruits
+
+usermod -G fruits peter-->peter is jumped to fruits grp
+
+
+if we want to add user in more than one group
+
+usermod -aG fruits,vegetable,cricket peter
+then peter is assigned with fruits,vegetable,cricket.
+
+if we want to check the:
+->members of the group
+->group of the member
+
+-->lid -G cricket
+
+
+ create user rohan with uid 1234 and set his account expiration date to 31st dec 2024?
+ adduser -u 1234 rohan
+ usermod -e 2024-12-31 rohan
+ chage -l rohan
+
+create password for user--12345
+************************
+passwd -->it will update th epasswd of the root
+
+passwd user -->here we can set the passwd for the user
+
+passwd -d user-->this deletes the passwd for that user
+
+tail -1 /etc/shadow-->to check the details of passwd and expiration of passwd
+
+passwd -e user -->to expire the passwd
+
+
+to open terminal-->alt ctl F1 f2 f3 f4
+
+to lock the passwd-->passwd -l iphone
+
+to unlock the passwd-->passwd -u iphone
+
+passwd -d user-->this deletes the existing passwd
+
+to switch to user-->sudo - user
+
+
+
+ chage -l rohan-->to know the password details
+
+
+Last password change                                    : Jan 31, 2024
+Password expires                                        : never
+Password inactive                                       : never
+Account expires                                         : Dec 31, 2024
+Minimum number of days between password change          : 0
+Maximum number of days between password change          : 99999
+Number of days of warning before password expires       : 7
+
+
+to set minimum number of days to change the passwd-->passwd -n 2 rohan
+
+to set maximum number of days to change the passwd-->passwd -x 30 rohan
+
+to set the warning days-->passwd -w 3 rohan
+
+to set the expiration days after warning-->passwd -i 4 rohan
+
+To change the min-length of the password -->sudo nano /etc/security/pwquality.conf
+
+
+
+create a user kapil with uid 1234 and assign passwd 12345 and this passwd should be visible in /etc/shadow/
+
+rename loginname from kapil to vikram
+
+
+create 1 file name greetings in vikrams home dir
+
+append current login shell info into  same system varible
+
+add this vikram user as spplement member of sales group
+
+
+to visible the passwd--->>usermod -p 12345 kapil
+
+
+
+
+useradd -u 1234 kapil
+useradd -p 12345 kapil
+tail -1 /etc/shadow
+
+usermode -l vikram kapil
+tail -1 etc/passwd
+
+cd /home
+ls
+ls -d kapil
+cd
+usermod -md /home/vikram1 vikram1
+cd /home
+ls
+cd
+
+
+touch /home/vikram1/greetings.txt
+cd /home/vikram1/
+ls
+cd
+
+echo $SHELL >> /home/vikram1/greetins.txt
+
+
+
+
+permissions
+******************************
+
+ls -l/ll/getfacl
+
+ll file1-->displys permissions
+
+getfacl file1-->displys permissions
+
+
+chmod o+x file1
+
+chmod go-x file1
+chmod g-x,o-x file1
+
+chmod a=r file1/chmod ugo=r file1-->all permissions are read
+
+r=4
+w=2
+x=1
+
+
+********************************************************
+
+
+015  -->  - - - - - x r - x
+file-->   r w - r w - - w -  -->662
+dir -->   r w x r w - - w -  -->762
+
+
+umast  -->207--> - w - - - - r w x
+file   -->-----> r - - r w - - - -460
+dir    --------> r - x r w x - - -570
+
+
+
+
+to change by default settings of password  -->vim /etc/login.defs
+
+to change the default settings of password like length  -->vim /etc/security/pwquality.conf
+
+special permission
+***********************
+files or directories
+
+SUID chmod u+s filename
+SUID chmod u-s filename
+
+SUID chmod u+s filename | chmod 4777 filename
+SUID chmod u-s filename | chmod 0777 filename
+
+SUID chmod g+s filename | chmod 2777 filename
+SUID chmod g-s filename | chmod 0777 filename
+
+SUID chmod o+t filename | chmod 1777 filename
+SUID chmod o-t filename | chmod 0777 filename
+
+
+ls -l /root  --->no permission to user
+
+go to root
+chmod u+s /usr/bin/ls
+ll /usr/bin/ls
+exit
+ls -l /root -->got permission
+
+
+
+
+# Create a new static connection named "Static-Network"
+nmcli connection add \
+  con-name "Static-Network" \
+  type ethernet \
+  ifname "*" \
+  ipv4.addresses 192.168.1.110/24 \
+  ipv4.gateway 10.10.10.1 \
+  ipv4.method manual
+
+
+
+************************************************************************************************************************
+
+
+find where what
+-name,, -type[f,d,b,c], -size[m,G,K],-perm
+mtime[days],mmin[mins 20]
+
+search for the file that ends with .txt
+
+find the files having size more than 580 and then delete it
+
+
+create a par 155mb and keep permenent
+
+
+
+
+
+
+*********************************************************************************************************************************************************************************
+=================================================================================================================================================================================
+
+*********************************************************************************************************************************************************************************
+
+
+
+
+
+
+
+Operators script
+
+echo "Enter 1st number"
+read a 
+echo "enter 2nd number"
+read b
+echo sum is: $(($a + $b))
+echo "sub is:" `expr $a - $b`
+echo mul is: expr $a \* $b
+echo expo is: expr $a ** $b
+-----------------------------------
+
+#comparison operators ==>  >,<,>=,<=,==,!= <----> -gt, -lt, -ge, -le, -eq, -ne
+
+[ 1 -eq 1 ]; echo $? --> output is 0 true, --> 0 for true, other than 0 is false
+[ 1 -gt 1 ]; echo $? --> output 1 false
+date
+echo $? --> output is 0, --> execution state of previous command
+userdel pollard --> no user pollard exist
+echo $? --> output 6, --> command not executed
+---------------------------------------
+Here are some of the common file test symbols in Linux:
+
+-e: This symbol checks if a file exists.
+-f: This symbol checks if a file is a regular file.
+-d: This symbol checks if a file is a directory.
+-r: This symbol checks if a file is readable.
+-w: This symbol checks if a file is writable.
+-x: This symbol checks if a file is executable.
+
+vim filetest
+[
+echo "enter file name"
+read a 
+
+if [ -e $a ]  #-f for file exists, #-r if file has read permission, # -s for file exists and size greater than 0 
+then 
+echo "file exists"
+else
+echo "file not exists
+fi
+]
+
+chmod +x filetest
+./filetest
+ls firstscript
+./filetest
+
+link file
+ln -s s1 s1-link
+ll -i s1 s1-link --> inode numbers are different in soft link
+
+if [ -L $a ] 
+then 
+echo "file exists"
+else
+echo "file not exists
+fi
+]
+
+./filetest
+for s1 --> file not exist
+for s1-link --> file exists
+
+Q)write a script whether file exist, confirm file is having read permissions
+
+in 
+echo "enter a file name"
+read a 
+if [ -e $a ] && [-r $a ];
+then
+echo "file exists and have read permission"
+else
+echo "file not exists"
+fi 
+
+Q)write a shell scripts that checks total number of command line argument passed if the count is greater than 5 then display the message "too many arguments"
+
+****************************************************
+15-3-24
+
+--->Switch case
+
+vim stwich
+[
+echo "enter file name"
+read a
+case $a in
+a|1) echo "sunday";;
+b|2) echo "monday";;
+c|3) echo "tuesday";;
+*) echo "wrong choice!";;
+esac
+]
+chmod +x switch
+./switch --> enter numbers 
+
+--------------------------
+Q) write a script that takes input from user if user type f then it should create file with same name and if chooses d then directory with same name should be created.
+
+nano switch1
+[ 
+echo "enter"
+read a 
+case $a in
+f*|F*) touch $a;;
+d*|D*) mkdir $a;;
+*) echo "wrong choice!";;
+esac
+ls $a
+]
+
+--------------------------
+Q) write a script that checks whether the file exist, if does not exist then create it.
+
+nano switch2
+[
+echo "enter file name"
+read a 
+if [ -e $a ]
+then
+echo "file exists"
+else
+touch $a
+fi
+]
+
+--------------------------
+Q) write a script that checks whether the argument passed at command line is a file or directory.
+
+nano new
+[
+if [ -f $1 ]
+then
+echo "$1 is a file"
+elif [ -d $1 ]
+then
+echo "$1 is a directory"
+else
+echo "its first arg is neither file or directory"
+fi
+]
+
+--------------------------
+Q) write a script to check whether the entered user name is valid user or not.
+
+nano new1
+[
+echo "username"
+read a
+if [ $a == $logname ] 
+then 
+echo "valid user"
+else
+echo "invalid user"
+fi
+]
+
+for hostname use if [ $a == $HOSTNAME ]
+
+*******************************************************************
+--->Loops
+
+do loop -->
+
+for i in 1 2 3 4 5
+do
+echo "hi $i"
+done
+
+or||
+
+for((i=0;i<=5;i++))
+do 
+echo "hi $i"
+done
+
+------------------
+while loop -->
+
+while[condition]
+do
+command1command2command3.....
+done
+
+---------------------
+Q)
+1)write a script to display hostname
+2)display file system disk space usage
+3)display memory usage
+4)display list of all logged-in-users
+5)display long information about processes
+6)to display ip address --> hostname -I
+
+
+****************************************************************
+20-3-24
+
+
+Q)write a script to create a network of network name = registration no, ipv4 address = 192.1.110/24, ipv4 gateway = 192.168.1.1, DNS = 8.8.8.8
+  verify and after activating the connection
+
+nano script 
+[
+echo "con-name ipv4-address gateway dns"
+nmcli connection add con-name $1 type ethernet ifname enp0s3 ipv4.addresses $2 ipv4.gateway $3 ipv4.dns $4 ipv4.method manual
+nmcli con up $1
+nmcli dev show
+]
+
+chmod +x script
+./script
+--------------------------
+
+Q)Write a script to check the exists of any user in the system
+
+nano valid user
+[
+echo "enter the usename"
+read a
+if grep -q "$a" /etc/passwd --> grep is used to find a string inside a file, -q is used to check only name
+then 
+echo "user exists"
+else
+echo "user doesn't exist"
+fi
+]
+
+******************************************************
+22-03-24
+
+SChedule future tasks/jobs/events
+
+#two jobs --> 1.one time   2.recurring
+ commands --> 1.  at       2. crontab
+1. at <TIMESPEC> --> time specification
+example: at now +2min    at teatime tomorrow (16:00)    at noon(12:00)   at 11:00am 25 march  3/25/2024
+
+atq --> to list the sccheduled job
+atrm <jobno.>          atrm 2 --> task assigned with job no gets removed
+
+-->commands for 1.one time :
+date
+at now +3min
+mkdir /tmp/cricket --> inside at( /bin/sh)
+ctrl + D --> to exit
+atq --> to list jobs
+ls -d /tmp/cricket --> no file
+ls -d /tmp/cricket --> file exist after 3min
+atq --> executed and removed from list jobs
+-------------------------------------------
+
+Q)create a file in same dir of cricket after 2 min and just after 3min redirect welcome message in to the same file
+
+at now +2min
+touch /tmp/cricket/12020188
+atq
+
+at now +3min
+echo "welcome" >>/tmp/cricket/12020188
+atq
+
+-------------------
+Q)Display output of cal at your terminal after 2min
+
+tty --> terminal output (/dev/pts/0)
+
+at now +1min
+ls >/dev/pts/0
+
+at now +1min
+cal >/dev/pts/0
+---------------
+
+echo "hello" >>/tmp/cricket/12020188 | at now +1min
+
+at teatime tomorrow
+echo "$SHELL" >/dev/pts/0
+
+echo "$HOSTNAME" >>/tmp/cricket/12020188 | at noon
+echo "$HOSTNAME" >>/tmp/cricket/12020188 | at 11:00am 3/25/2024
+-------------------------------
+
+-->commands for 2.recurring :
+# crontab -e -->to schedule,  vim editor will be opened
+# crontab -l -->to list
+# crontab -r -->to remove
+
+for perticular user
+# crontab -u anil -e --> for any user
+
+vim /ect/crontab --> configuration file
+* * * * * command --> minutes hours date month day command
+
+commands:
+
+crontab -e
+12 12 22 mar far touch /tmp/cricket/crontab.txt
+
+crontab -l --> to list job
+ls -l /tmp/cricket/crontab.txt --> file is created
+
+crontab -e
+12 12 22 mar far echo "Welcome" /tmp/cricket/crontab.txt
+
+* --> every min, */2 --> every 2 min
+
+*/2 12-13 22 mar fri echo "$LOGNAME" >/dev/pts/0 --> display usernama after every 2 min between 12-13 time
+-----------------------------------------
+
+Q)Schedule a job for user anil should send the message work done at 15:35 localtime
+Q)Display date on anil terminal
+
+
+*****************************************************************
+27-03-24
+
+grep [options] "pattern" argument1 agr2 ...
+cd K20GR
+vim fruits.txt
+
+[grapes
+apple 
+Apple
+APPLE
+pineapple 
+apple123
+mango
+889apple
+]
+
+grep "mango" fruits.txt --> output:mango, string get searched in the file
+grep "A" fruits.txt --> OUTPUT:Apple,APPLE ,character get searched in the file
+
+grep -w "A" fruits.txt --> output:      ,search complete word
+grep -w "Apple fruits.txt --> output: Apple
+
+grep -i "apple" fuits.txt --> output:apple,Apple,APPLE,pineapple,apple123..., case insensitive
+grep -ic "apple" fuits.txt -->output:6 , count words 
+grep -v "apple" fuits.txt --> opposite to word
+grep -vi "apple" fuits.txt
+
+vim veg.txt
+[
+potato
+onion
+apple
+]
+
+grep "apple" fruits.txt veg.txt --> search in file accordingly
+
+grep -e "mango" -e "apple" fruits.txt --> to find multiple words in a single file
+
+grep -e "mango" -e "potato" fruits.txt veg.txt    or   grep -e "apple fruits.txt -e "potato" veg.txt  --> search different words in different files
+
+------------------------------------------------------
+
+#Regular expressions
+
+* --> zero or more occurence --> hel*p=hep,help,hellp,helllp..
+. --> any one character --> he.p
+[] --> or situation --> he[ic]p
+[^] --> not --> help[^ab]p
+^ -->line begininng with, grep ^[a-z] filename
+$ --> line that ends with, grep [0-9]# filename
+-E --> (Extended regular expressions) 
+        + --> 1 or more occurence of previous
+        ? --> 0 or 1 occurence
+{m,n} -->m=minimun occurence, n=maximum occurence of previous character of {}
+() --> complete word
+
+
+vim regexp
+[
+heap
+hep
+hel$p
+hellp
+helAp
+hel2p
+hel578p
+]
+
+grep "hel*p" regexp -->output: hep,help,hellp, ouucrence of previous character of * -------------
+grep "he.p regexp -->heap,help
+grep "hel.p" regexp -->hel$p,help,helAp
+
+grep "he[lA]p regexp -->hellp,heaAp -->search l or A occurence
+
+grep "hel[a-z]p" regexp --> in range of a to z
+grep "hel[a-z A-Z]p" regexp --> in range of a to z and A to Z
+grep "hel[a-z A-Z 0-9]p" regexp
+grep "hel[a-z A-Z]*p" regexp --> search multiple occurence of values in []
+
+grep "help[^a-z]p" regexp --> output:hel$p,hel2p
+
+grep "^h" regexp --> words starting with h character
+
+grep "p$" regexp --> words that ends with p
+grep "[0-9]$" regexp
+
+grep -E "hel+p" regexp --> occurence of previous character of + , 1 or more time
+grep -E "hel?p" regexp --> 0 or 1 occurence
+
+grep -E "hel{2,4}p" regexp --> hellp,hellllp
+grep -E "he[a-z]{2,4}" regexp --> a-z characters of atleast 2 and max 4 
+
+grep -E "par(deep)" regexp
+
+----------------------------------------------------------
+Q)Search for the pattern in the file that starts with A or any digit
+
+grep "^[A 0-9] regexp
+
+Q)Search for the pattern that don't starts with a to z
+grep "^[^a-z] regexp
+
+Q)write a syntax to count no.of lines that doesn't begins with lowercase letters
+grep -c "^[^a-z]" filename
+
+Q)write a syntax to count for empty lines
+grep -c "^$" regexp
+grep -n "^$" regexp --> output with line no's
+
+Q)write a command to search for pattern that contains only digit
+grep "^[0-9]+$" regexp
+
+
+Q)write a syntax to search for lines that starts and ends with digits
+grep "^[0-9][A-Za-z0-9]*[0-9]$" regexp
+   OR
+grep "^[0-9].*[0-9]$" regexp
+
+******************************************************************
+
+29-03-24
+
+Locate and Find
+
+for find --> syntax=find where what
+-name,,-type[f,d,b,c] -->(b=block device,c=charater type),-size[M,G,K],-perm(permission),mtime[days],mmin[minutes 20,+20,-20],-user,-uid,-group,-gid -->attributes
+find [search_path] [search_criteria] -exec [command] {} \;
+
+
+touch f1.txt
+pwd
+find /home/mnprt2387/K20GR/ -name f1.txt
+or 
+find . -name -f1.txt
+------------------------------------------
+
+Q)Search for the files that ends with .txt
+find . -name "*.txt"
+
+Q)Search for the directory in present working directory
+find . -type d
+find . type d -name "g*" --> directory that starts with g
+
+Q)Search for the file in /etc directory having password string in between
+find /etc -name "*pass"
+
+Q)Find the file that is owned by u1 user
+go to root
+find /home/u1 -user u1 --> files in u1 user
+find /home/u1 -user u1 -name "*.txt" --> files that ends with .txt in u1 user
+id u1
+find /home/u1 -uid 1001 -name "*.txt"
+
+Q)Change f1 file permisson to 444
+chmod u-w f1.txt
+
+Q)Search for the files which is having 1444 permission
+chmod 1444 f1.txt
+find . -type f -perm 1444
+----------------------------------------------
+
+for permission
+
+touch f1.txt
+chmod 444 f1.txt
+ll f1.txt --> -rw r-- r--
+find . -type f -perm 444 --> ./f1.txt
+find / -type f -perm 444
+
+for size
+
+#-size
+ll -l --> Search files with size
+ll -h --> files with size in human readable form
+
+truncate -s 10K f10.txt
+ll -h f10.txt
+find . -type f -size 10k
+find . -type f -size -10k --> all the files upto 10k
+find . -type f -size +10k --> all the files above 10k
+find . -type f -size +5k -size -10k --> all the files between 5k to 10k
+
+for time
+
+find . -mtime +100 -mtime -200 --> files between 100 days to 200 days
+find . -mmin +100 -mmin -200 --> files between 100 mins to 200 mins
+----------------------------------------------------
+
+Q)Find the files having size more than 5kb in pwd and delete it.
+#-exec rm -rf {} \;
+
+truncate -s 7k abc.txt
+find . -name abc.txt -type f -size +5k -delete
+
+Q)Find the files in pwd having names abc.txt having more than 5k size and delete it
+find . -name abc.txt -size +5k -exec rm -rf {} \;
+
+Q)Find the file with the name called welcome.txt and paste it under /tmp directory under greetings.txt file
+
+touch welcome.txt
+echo "hello: > welcome.txt
+cat welcome.txt
+touch /tmp/greetings.txt
+find . -name welcome.txt -exec cp {} /tmp/greetings.txt \;
+cat /tmp/greetings.txt -->output: hello
+cat welcome.txt 
+
+or
+echo "move file" > text.txt
+find . -name test.txt -exec mv {} /tmp/greetings.txt \;
+cat /tmp/greetings.txt -->output: move file
+
+******************************************************************************
+
+1-04-2024
+
+#tinning profile
+
+yum install tuned
+tuned-adm list --> to check list of profiles in system
+tuned-adm active --> to see active profile
+tuned-adm recommend --> which profile are recommended for your system
+tuned-adm profile network-latency --> to change profile
+tuned-adm active --> active=network-latency
+tuned-adm profile throughtput-performance
+tuned-adm active --> active=throughtput-performance
+tuned-adm profile virtual-guest
+tuned-adm active --> active=virtual-guest
+
+**************************************************************************
+
+#Partitions
+managing storage
+primary(1-4)(fdisk,gdisk,parted)
+swap
+LVM
+
+Three steps
+1.creation
+2.format partition with file system (ext4. xfs)
+3.Mounting
+	two ways
+	i.temporary/manually
+	ii.permanent(/etc/fstab)
+umount(detaching)
+
+1.1 fdisk /dev/sdb
+	n->create new partition
+d->delete existing partition
+p->print/list the existing
+w->write/save the changes
+q->quit
+t->to change type of partition
+
+Settings->Hard disk -> add -> next -> Recommended ->Create new Virtual disk ->Give size ->next ->Finish
+
+
+----------------------------
+
+id value for linux based partion is 83
+step 1 in partition
+
+fdisk -l --> to check partion details
+lsblk
+fdisk /dev/sdb --> redirected to fdisk
+m --> for help
+n --> create new partition type
+p --> p for primary
+1 --> 
++15K --> size for partition
+p --> to confirm partition
+w --> to save
+lsblk --> to see the partitions
+for delete 
+d
+----------------------
+
+step 2 in partition
+
+mkfs.xfs /dev/sdb1
+/etc/fstab --> configuration file
+
+temporary mounting
+
+#mount [what] [where]
+mkdir /mounting_point
+mount /dev/sdb1 /mounting_point/
+partprobe --> update the changes
+cd /mount_point/
+touch t1
+mkdir d1
+
+umount /mounting_point --> for umount any mounting
+------------------------
+
+permanent mounting
+
+vim /etc/fstab
+[partition name]   [mounting_point]   [file system]   defaults 0 0
+/dev/sdb1   /mounting_point/   xfs  defaults 0 0
+partprobe
+mount -a 
+systemctl daemon-reload --> reaload the system
+--------------------------
+
+blkid /dev/sdb1 --> uuid of sdb1
+mkdir /K20GR
+UUID="paste uuid of sdb1" /K20GR/ xfs defaults 0 0 
+
+----------------------------
+Q1) Create a partition of +20M and formate with ext4 and also mount it with one temporary and other with permanent
+
+***********************************************************
+
+Swap, value=82
+
+creation
+fdisk /dev/sdb
+t
+L --> to see list
+82 --> for swap
+w
+
+formation
+
+mkswap /dev/sdb2 --> format partition
+swapon -a --> to active formated partition
+swapon --show --> to see partition
+swapoff -a --> deactive
+free --> to check
+
+mounting
+
+vim /etc/fstab
+/dev/sdb2   swap   swap  defaults 0 0
+partprobe 
+swapon -a
+mount -a
+systemctl daemon-reload
+lsblk
+
+==>Swapping
+
+mkfs.ext4 /dev/MYLPU/lv1 
+
+==>Mounting
+
+mkdir /mnt/KE20GR 
+lsblk
+mount /dev/MYLPU/lv1 /mnt/KE20GR/
+parprobe
+lsblk
+
+blkid /dev/MYLPU/lv1 --> uuid ,crtl+shift+C to copy
+umount -a  --> umount all 
+
+vim /etc/fstab
+UUID="uuid" /mnt/KE20GR ext4 defaults 0 0
+system daemon-reload 
+mount -a
+lsblk
+
+
+
+
+tunning Profile:
+yum install tuned(dont work)
+tuned-adm list->shows list of all profiles
+tuned-adm active->to activate
+tuned-adm recommend->which profiels are recommended for your system
+To Change the system profiels:
+name is network-latency
+tuned -adm profile network-latency
+again active using command
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

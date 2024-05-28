@@ -1,0 +1,20 @@
+Rakesh set-B
+
+1.sudo hostnamectl set-hostname hostname12017952.cal.com
+
+2.
+a) sudo groupadd -g 1024 sysadm
+b)sudo useradd harsh
+sudo usermod -aG sysadm harsh
+c)sudo useradd -u 1099 natasha
+sudo usermod -aG sysadm natasha
+d)cat /home/harsh/file1 /home/harsh/file2 /home/harsh/file3 /home/harsh/file4 > /tmp/all-four-in-one
+e)sudo find /home/harsh -exec cat {} + > /tmp/save_both 2>&1
+
+f)sudo chage -m 10 -M 30 -W 5 -E 2024-12-31 harsh
+g)tail -n 100 /var/log/dmesg > /tmp/my_file_messages
+h)sudo groupadd -g 1024 linuxadm
+i)sudo useradd -s /sbin/nologin susan
+ or sudo useradd --shell /sbin/nologin susan
+j)date +%r
+ 

@@ -1,0 +1,30 @@
+crontab
+use - backups, automation, recurring
+crontable - crontab
+jobs that are scheduled - cron-jobs
+
+
+To check the syntax
+cat /etc/crontab
+***** command	
+minute(0-59) hour(0-23) dayofmonth(1-31) month(1-12) dayofweek(0-6)
+
+# at every 3 minutes */3 * * * *
+# midnight from Monday to Friday  0 0 * * 1-5  
+# 10 am at every mon,wed,fri  0 10 * * 1,3,5
+
+current user crontable list
+$ crontab -l
+to edit the cron table
+$ crontab -e
+example - create a file server in / at 10 12 pm
+12 22 * * * mkdir /server
+save and exit
+$ crontab -l
+
+remove the crontab
+$ crontab -r
+----------------------------------
+crontab of different user (example iam at root and want to see yash user's crontab)
+$ crontab -u yash -l
+$ crontab -u yash -e 

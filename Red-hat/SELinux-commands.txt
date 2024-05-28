@@ -1,0 +1,53 @@
+SELinux
+
+Modes- enforcing, permissive, disabled
+$ getenforce
+$ setenforce 0
+0-> permissive, 1->enforcing
+
+$sestatus
+to make disable
+$ nano /etc/sysconfig/selinux
+make changes in line as 
+SELINUX=disabled and save and exit
+$ systemctl restart httpd or restart system
+
+updation,manage and assign permission based on context
+context-propertities taken by ports,data,files etc
+
+yum install httpd
+systemctl status httpd
+systemctl start httpd
+systemctl enable httpd
+systemctl restart httpd
+
+//this command changes are temporary
+chcon –t httpd_sys_content_t [file/directory]
+$ chcon -t httpd_sys_content_t /test1/index2.html
+$ nano /etc/httpd/conf/httpd.conf
+$ systemctl restart httpd
+$ curl localhost/index2.html
+
+
+to make persistent change the configuration file
+
+eq:
+go to root
+$ su -
+$ cd /
+$ cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.original
+$ mkdir test
+$ cd test
+$ nano index1.html
+write some new content and save the file
+check the context-type initially
+$ ls -lZ
+$ nano /etc/httpd/conf/httpd.conf
+change the necessary settings and save it
+$ semanage fcontext -a -t httpd_sys_content_t "/new(/.*)?"
+$ restorecon -Rv /new
+$ ls -lZ
+$ systemctl restart httpd
+$ curl localhost/index1.html
+
+

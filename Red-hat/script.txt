@@ -1,0 +1,228 @@
+script
+
+echo "Enter 1st number"
+read a 
+echo "enter 2nd number"
+read b
+echo sum is: $(($a + $b))
+echo "sub is:" `expr $a - $b`
+echo mul is: expr $a \* $b
+echo expo is: expr $a ** $b
+-----------------------------------
+
+#comparison operators ==>  >,<,>=,<=,==,!= <----> -gt, -lt, -ge, -le, -eq, -ne
+
+[ 1 -eq 1 ]; echo $? --> output is 0 true, --> 0 for true, other than 0 is false
+[ 1 -gt 1 ]; echo $? --> output 1 false
+date
+echo $? --> output is 0, --> execution state of previous command
+userdel pollard --> no user pollard exist
+echo $? --> output 6, --> command not executed
+---------------------------------------
+Here are some of the common file test symbols in Linux:
+
+-e: This symbol checks if a file exists.
+-f: This symbol checks if a file is a regular file.
+-d: This symbol checks if a file is a directory.
+-r: This symbol checks if a file is readable.
+-w: This symbol checks if a file is writable.
+-x: This symbol checks if a file is executable.
+
+vim filetest
+[
+echo "enter file name"
+read a 
+
+if [ -e $a ]  #-f for file exists, #-r if file has read permission, # -s for file exists and size greater than 0 
+then 
+echo "file exists"
+else
+echo "file not exists
+fi
+]
+
+chmod +x filetest
+./filetest
+ls firstscript
+./filetest
+
+link file
+ln -s s1 s1-link
+ll -i s1 s1-link --> inode numbers are different in soft link
+
+if [ -L $a ] 
+then 
+echo "file exists"
+else
+echo "file not exists
+fi
+]
+
+./filetest
+for s1 --> file not exist
+for s1-link --> file exists
+
+Q)write a script whether file exist, confirm file is having read permissions
+
+in 
+echo "enter a file name"
+read a 
+if [ -e $a ] && [-r $a ];
+then
+echo "file exists and have read permission"
+else
+echo "file not exists"
+fi 
+
+Q)write a shell scripts that checks total number of command line argument passed if the count is greater than 5 then display the message "too many arguments"
+
+****************************************************
+15-3-24
+
+--->Switch case
+
+vim switch
+[
+echo "enter file name"
+read a
+case $a in
+a|1) echo "sunday";;
+b|2) echo "monday";;
+c|3) echo "tuesday";;
+*) echo "wrong choice!";;
+esac
+]
+chmod +x switch
+./switch --> enter numbers 
+
+--------------------------
+Q) write a script that takes input from user if user type f then it should create file with same name and if chooses d then directory with same name should be created.
+
+nano switch1
+[ 
+echo "enter"
+read a 
+case $a in
+f*|F*) touch $a;;
+d*|D*) mkdir $a;;
+*) echo "wrong choice!";;
+esac
+ls $a
+]
+
+--------------------------
+Q) write a script that checks whether the file exist, if does not exist then create it.
+
+nano switch2
+[
+echo "enter file name"
+read a 
+if [ -e $a ]
+then
+echo "file exists"
+else
+touch $a
+fi
+]
+
+--------------------------
+Q) write a script that checks whether the argument passed at command line is a file or directory.
+
+nano new
+[
+if [ -f $1 ]
+then
+echo "$1 is a file"
+elif [ -d $1 ]
+then
+echo "$1 is a directory"
+else
+echo "its first arg is neither file or directory"
+fi
+]
+
+--------------------------
+Q) write a script to check whether the entered user name is valid user or not.
+
+nano new1
+[
+echo "username"
+read a
+if [ $a == $logname ] 
+then 
+echo "valid user"
+else
+echo "invalid user"
+fi
+]
+
+for hostname use if [ $a == $HOSTNAME ]
+
+*******************************************************************
+--->Loops
+
+do loop -->
+
+for i in 1 2 3 4 5
+do
+echo "hi $i"
+done
+
+or||
+
+for((i=0;i<=5;i++))
+do 
+echo "hi $i"
+done
+
+------------------
+while loop -->
+
+while[condition]
+do
+command1command2command3.....
+done
+
+---------------------
+Q)
+1)write a script to display hostname
+2)display file system disk space usage
+3)display memory usage
+4)display list of all logged-in-users
+5)display long information about processes
+6)to display ip address --> hostname -I
+
+
+****************************************************************
+20-3-24
+
+
+Q)write a script to create a network of network name = registration no, ipv4 address = 192.1.110/24, ipv4 gateway = 192.168.1.1, DNS = 8.8.8.8
+  verify and after activating the connection
+
+nano script 
+[
+echo "con-name ipv4-address gateway dns"
+nmcli connection add con-name $1 type ethernet ifname enp0s3 ipv4.addresses $2 ipv4.gateway $3 ipv4.dns $4 ipv4.method manual
+nmcli con up $1
+nmcli dev show
+]
+
+chmod +x script
+./script
+--------------------------
+
+Q)Write a script to check the exists of any user in the system
+
+nano valid user
+[
+echo "enter the usename"
+read a
+if grep -q "$a" /etc/passwd --> grep is used to find a string inside a file, -q is used to check only name
+then 
+echo "user exists"
+else
+echo "user doesn't exist"
+fi
+]
+

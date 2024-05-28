@@ -1,0 +1,84 @@
+$hostname -> prints the hostname
+$cat /etc/hostname -> prints the hostname
+$hostnamectl -> gives the detailed information of the machine
+$hostnamectl set-hostname new_name -> set new hostname
+
+$su -  -> root user and its pwd = /root directory
+$su -> giving another user in my present directory
+
+sudo - superuserdo - normaluser having power of admin/superuser
+
+>wordcount of a file 
+$wc file file_name
+//returns  lines,words and characters
+$wc -l file_name
+$wc -w file_name
+$wc -c file_name
+
+>Soft or Symbolic links
+$ln -s filepath/filename  newpath/filename
+//soft link is like pointers, deleting main file affects the linked file
+//softlink is like shortcuts to a file in windows for example
+//Note: Soft links can point to files or directories and can span across different locations in the file system.
+
+>Hard link
+$ln filepath/filename  newpath/filename
+//Hard link is like adding doors to a room, removing any door doesn't affect the room so deleting mainfile don't affect the linkedfile
+//NOTE: Hard links can only be created for files, not directories.
+
+>Create and delete multiple files with number sequence
+$touch yaswanth{1..4}
+//creates 4 files named yaswanth1, yaswanth2, yaswanth3, yaswanth4
+$rm yaswanth{1..4}
+
+
+/etc/passwd ->contains all the information of users
+/etc/shadow ->contains password of users in form of hash values
+/etc/group ->contains information of groups 
+
+##Users
+>go to root by su -
+$useradd user_name -> create a new user
+$useradd demo1
+
+>rename the username
+$usermod -l new_name old_name
+$usermod -l demo2 demo1
+
+>change the home directory of new user after renaming the new user
+$usermod -d /home/new_name new_name
+$usermod -m /home/demo2 demo2
+
+** But after changing the name and changing home directory separately it gives error while going to user with new name. so,
+$usermod -l new_name -m -d home/new_name old_name
+$usermod -l demo2 -m -d home/demo2 demo1
+This works as -m directly moves all files from home/demo1 to  home/demo2 which makes home/demo2 as home directory for new named folder demo2 as we changed name od user.
+
+>change password to user, go to root
+$passwd user_name
+$passwd demo2
+
+>Delete password of an user
+$passwd -d user_name
+$passwd -d demo2
+
+>change/update password of any user, go to root first
+$usermod -p new_password user_name  -> then password is not created as hash-file, it is directly present in shadow folder
+
+
+>Enforce an user to change the password, go to root and 
+$passwd -e username  
+// now we can go to that user from root and if we go from normal user it needs current password and also asks to change password
+
+>Lock password, go to root
+$passwd -l username
+>Unlock password
+$passwd -u username
+
+>Delete password for an user, this allows any users to login without asking passwors as it is deleted, go to root
+$passwd -d username
+
+>set no of days before a password can be changed, by default is 0, indicates user can change their password at any time
+$passwd -n -10 user2   // 10 days 
+
+>max no of days password remains valid

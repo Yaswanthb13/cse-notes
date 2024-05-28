@@ -1,0 +1,85 @@
+LVM - logical volume manager
+we can combine multiple hard disks to create a single large virtual space (volume group)
+A single large volume/partition can be created from this virtual space - logical volume
+
+1.create partition
+2.change partition type
+3.create physical volume (pv)
+4.create volume group (vg)
+5.create logical volumnes (lv)
+6.format lv
+7.mount lv
+
+
+I added 2 disks and full disk is converted to partition
+lsblk
+fdisk /dev/nvme0n2
+   n
+   p
+   enter
+   enter
+   t
+   l
+   8e
+   p
+   w
+
+fdisk /dev/nvme0n2
+   n
+   p
+   enter
+   enter
+   t
+   l
+   8e
+   p
+   w
+now each disks have 1 partition of full size and type is 8e "Linux lvm"
+
+$ pvs
+$ pvcreate dev/nvme0n2p1 /dev/nvme0n3p1
+$ pvs
+$ pvdisplay
+
+$ vgs
+$ vgcreate vg01 /dev/nvme0n2p1 /dev/nvme0n3p1
+$ vgs
+$ vgdisplay
+$ vgremove vg01
+
+$ lvcreate -L 2G -n lv01 vg01
+or 
+$ lvcreate -l 20%FREE lv01 vg01
+$ lvs
+$ lvremove /dev/vg01/lv01
+
+$ mkfs.ext4 /dev/vg01/lv01 (format file system)
+$ mkdir /lv1
+$ mount /dev/vg01/lv01 /lv1
+$ lsblk
+(we can do 2 types of mounting and above is temp mounting)
+
+
+$vgs
+$ vgextend vg01 /dev/nvme0n3p1
+$ vgs to check
+
+$ lvs
+$ lvextend -L +4G -r /dev/vg01/lv01
+this command extends the lv with +4GB and also resizes the already created filesystem
+*** if -r is not give in above command
+$ resize2fs /dev/vg01/lv01 (to resize the filesystem)
+
+$ lvreduce -L -2G  -r /dev/vg01/lv01
+when any pv is of full size and not utilized in the lv then we can remove pv from vg
+$ vgreduce vg01 /dev/nvme0n3p1
+
+------------
+To remove first unmount
+$ umount /dev/vg01/lv01
+$ lvremove /dev/vg01/lv01
+$ vgremove vg01
+$ pvremove /dev/nvme0n2p1
+$ pvremove /dev/nvme032p1
+at last delete partitions also
+

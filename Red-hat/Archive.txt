@@ -1,0 +1,26 @@
+Archive
+
+create an archive archive.tar and put file1,file2,file3 in it
+$ tar -cf archive.tar file1 file2 file3
+
+list the files in archieve
+$ tar -tf archive.tar
+
+extract the archive to some other folder like arch-backup
+$ mkdir arch-backup
+$ cd arch-backup
+$ tar -xf /home/yaswanth/archive.tar
+
+To create a compressed tar archive, use one of the following arguments for specific compressions
+'z' for gzip compression (filename.tar.gz)
+'j' for bzip2 compresseion (filename.tar.bz2)
+'J' for xz compression (filename.tar.xz)
+
+>>we need to create and compress at a time but not like first create a tar file and then compress the tar.
+
+practice, we go to root so we can access /etc
+
+$ tar -czf backup_etc_gzip.gz /etc
+$ tar -cjf backup_etc_bzip2.bz /etc
+$ tar -cJf backup_etc_xz.xz /etc
+

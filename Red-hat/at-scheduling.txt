@@ -1,0 +1,36 @@
+at-scheduling
+at is used only for single time not repeating tasks
+
+syntax
+# at time command
+at follows both 12hr and 24hr time formats
+
+$ date
+$ at 10:35 PM
+at> mkdir folder
+ctrl+D to save and exit at terminal
+
+To list scheduled jobs
+$ atq
+$ at -l
+eg: 2	Tue May  7 22:55:00 2024 a root
+
+To remove
+$ atrm jobid
+$ atrm 2
+
+----------------------------------------------------
+example using at redirect calender to calender.txt
+$ at 22:45
+$ cal>>/calexample/calender.txt
+ctrl+D
+-------------------
+$ at now +1min
+$ at 3:50 PM today
+$ echo "hello" >>/tmp/12017952| at now +1min
+--------------------
+tty --> terminal output (/dev/pts/0)
+
+at now +1min
+cal >/dev/pts/0
+ls >/dev/pts/0

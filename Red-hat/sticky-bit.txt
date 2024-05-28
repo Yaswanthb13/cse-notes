@@ -1,0 +1,49 @@
+sticky-bit
+
+sticky-bit : for security purpose
+also called as restriction deletion flag
+only file owner or directory owner can delete,rename the file or directory
+
+the directory has rwx permissions for the group and the dir group is same as all users group then , the other users in same group can delete/rename the files created by other users of same group
+so in this case we use sticky but so only the owner can delete/rename the file
+
+give sticky bit to the folder
+$ chmod o+t folder/
+$ chmod +t folder/
+
+remove stickybit
+$ chmod o-t folder/
+
+to check -> $ ls -ld folder/
+
+t and T difference is 
+if the folder dont have executable permission(x) and give special permission like stick bit it shows 'T'
+if the folder has executable permission(x) and give special permission then it is shown as 't'
+
+other way is (we need to go to root to make permission)
+$ chmod 1775 folder/
+adding 1 infront of the default whatever permissions make it stickybit folder now in that folder any files can be removed/renamed by only owner of the file
+
+
+SETGID
+
+//the folder has Linux as primary group and then if we log to different users and create files in it then each file will have the file group owners as the file owner of the file
+to make all the files group owner same as directory group owner(in root)
+$ chmod g+s folder/
+now any user(even root) can create file in this folder all the files will have same group owner which is the directory group owner 
+ls -ld folder/
+ls -l folder/
+
+
+SETUID
+commands will run with owner rights instead of the rights of executor
+if any folder have rwx permissions set only to root and no permissions to group and other
+then we cannot see/access the folder with other users except root user
+so,
+(in root)
+mkdir per
+chmod 700 per
+su yash
+ls per or cd per (we cannot go inside or see whats inside of per directory as we dont have any permission)
+chmod u+s per
+ls -ld per (s is added as a permission)

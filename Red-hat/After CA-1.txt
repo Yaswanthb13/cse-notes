@@ -1,0 +1,84 @@
+After CA-1
+#create 2 users v1,v2
+$useradd v1
+$useradd v2
+
+#create passwords for users
+$passwd v1
+$passwd v2
+
+#create liux group
+$groupadd linux
+
+#Add both users to linux group
+//-aG -> append to group
+$usermod -aG linux v1
+$usermod -aG linux v2
+
+#from root create a common folder
+$mkdir /common
+$ls -ld /common  //to check the permisions of file (usergroupothers)
+
+#change the group from root to linux for common folder
+$chgrp linux /common
+$ls -ld /common  
+
+#give write permissions to linux grp in common folder 
+$chmod g+w /common or
+$chmod 777 /common
+$ls -ld /common  
+
+#As /common is under root directory which is top-level we need to give permissions to root folder also
+$chmod 777 /root
+$ls -ld /root  
+
+now we can go into any user and create files which can access by other users also in group
+
+##Stiky-bit from root
+Since any user can delete the content written by other users here comes stiky-bit by which only the owner can delete or update the file others can just see the data
+$chmod 1777 /common
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+disk partitioning
+#in root
+$fdisk -l
+$useradd new
+$passwd new
+
+#go to new user
+$su -new
+$fdisk -l   //-> gives error
+exit
+
+$cd /usr/sbin/
+$ls fdisk -l
+$chmod u+s fdisk
+
+now when we go to any user we can check fdisk -l without any errors
